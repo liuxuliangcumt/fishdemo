@@ -1,5 +1,6 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:video_player/video_player.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,10 +34,32 @@ class _MyHomePageState extends State<MyHomePage> {
   GlobalKey _key1 = GlobalKey();
   Shader shader;
   Gradient gradient;
+  VideoPlayerController _videoPlayerController1;
+  VideoPlayerController _videoPlayerController2;
+  ChewieController _chewieController;
 
   @override
   void initState() {
     super.initState();
+
+    _videoPlayerController1 = VideoPlayerController.network(
+        'http://mpvideo.qpic.cn/0bf2imhluaaoyyapgam74rpv4q6dxjbq5oqa.f10002.mp4?dis_k=fb42b0c5b47e4f901e5ad9ed49e442b5&dis_t=1603946949&vid=wxv_1573112140243206147&format_id=10002');
+    _videoPlayerController2 = VideoPlayerController.network(
+        'https://www.sample-videos.com/video123/mp4/480/asdasdas.mp4');
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController1,
+      aspectRatio: 3 / 2,
+      autoPlay: true,
+      looping: true,
+    );
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController1.dispose();
+    _videoPlayerController2.dispose();
+    _chewieController.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Color.fromARGB(255, 148, 197, 252)
         ]);
     shader = gradient.createShader(
-        Rect.fromLTWH(size.width / 2 - 80, 0, size.width / 2 + 20, 310));
+        Rect.fromLTWH(size.width / 2 - 100, 0, size.width / 2 + 20, 310));
 
     return Scaffold(
         backgroundColor: Colors.black,
@@ -66,6 +89,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: [
+                      Container(
+                        width: size.width,
+                        child: Chewie(
+                          controller: _chewieController,
+                        ),
+                      ),
                       Image.asset(
                         "assets/1.webp",
                       ),
