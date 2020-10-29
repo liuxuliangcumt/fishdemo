@@ -12,9 +12,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+      theme: ThemeData.light().copyWith(
+        platform: TargetPlatform.iOS,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -36,18 +35,46 @@ class _MyHomePageState extends State<MyHomePage> {
   Gradient gradient;
   VideoPlayerController _videoPlayerController1;
   VideoPlayerController _videoPlayerController2;
+  VideoPlayerController _videoPlayerController3;
+  VideoPlayerController _videoPlayerController4;
   ChewieController _chewieController;
+  ChewieController _chewieController2;
+  ChewieController _chewieController3;
+  ChewieController _chewieController4;
 
   @override
   void initState() {
     super.initState();
 
     _videoPlayerController1 = VideoPlayerController.network(
-        'http://mpvideo.qpic.cn/0bf2imhluaaoyyapgam74rpv4q6dxjbq5oqa.f10002.mp4?dis_k=fb42b0c5b47e4f901e5ad9ed49e442b5&dis_t=1603946949&vid=wxv_1573112140243206147&format_id=10002');
+        'http://imagescumt.test.upcdn.net/video/fish1.mp4');
     _videoPlayerController2 = VideoPlayerController.network(
-        'https://www.sample-videos.com/video123/mp4/480/asdasdas.mp4');
+        'http://imagescumt.test.upcdn.net/video/fish2.mp4');
+    _videoPlayerController3 = VideoPlayerController.network(
+        'http://imagescumt.test.upcdn.net/video/fish3.mp4');
+    _videoPlayerController4 = VideoPlayerController.network(
+        'http://imagescumt.test.upcdn.net/video/fish4.mp4');
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController1,
+      aspectRatio: 3 / 2,
+      autoPlay: true,
+      looping: true,
+    );
+
+    _chewieController2 = ChewieController(
+      videoPlayerController: _videoPlayerController2,
+      aspectRatio: 3 / 2,
+      autoPlay: true,
+      looping: true,
+    );
+    _chewieController3 = ChewieController(
+      videoPlayerController: _videoPlayerController3,
+      aspectRatio: 3 / 2,
+      autoPlay: true,
+      looping: true,
+    );
+    _chewieController4 = ChewieController(
+      videoPlayerController: _videoPlayerController4,
       aspectRatio: 3 / 2,
       autoPlay: true,
       looping: true,
@@ -59,6 +86,12 @@ class _MyHomePageState extends State<MyHomePage> {
     _videoPlayerController1.dispose();
     _videoPlayerController2.dispose();
     _chewieController.dispose();
+    _chewieController2.dispose();
+
+    _videoPlayerController3.dispose();
+    _videoPlayerController4.dispose();
+    _chewieController3.dispose();
+    _chewieController4.dispose();
     super.dispose();
   }
 
@@ -160,8 +193,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       SizedBox(height: 20),
                       Container(
-                        width: size.width,
-                        height: size.width / 1080 * 1773,
+                        width: size.width - 20,
+                        height: size.width / 1080 * 2200,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
@@ -176,12 +209,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                   "assets/8.webp",
                                   width: size.width,
                                 ),
-                                Image.asset(
-                                  "assets/4.png",
-                                  width: size.width,
-                                  fit: BoxFit.cover,
-                                  height: 100,
-                                ),
+                                Container(
+                                  width: size.width - 30,
+                                  child: Chewie(
+                                    controller: _chewieController2,
+                                  ),
+                                )
                               ],
                             ),
                             Column(
@@ -190,19 +223,21 @@ class _MyHomePageState extends State<MyHomePage> {
                                   "assets/7_1.webp",
                                   width: size.width,
                                 ),
-                                Image.asset(
-                                  "assets/4.png",
-                                  width: size.width,
+                                Container(
+                                  width: size.width - 30,
+                                  child: Chewie(
+                                    controller: _chewieController3,
+                                  ),
                                 ),
                                 Image.asset(
                                   "assets/7_2.webp",
                                   width: size.width,
                                 ),
-                                Image.asset(
-                                  "assets/4.png",
-                                  width: size.width,
-                                  fit: BoxFit.cover,
-                                  height: 150,
+                                Container(
+                                  width: size.width - 30,
+                                  child: Chewie(
+                                    controller: _chewieController4,
+                                  ),
                                 ),
                               ],
                             ),
